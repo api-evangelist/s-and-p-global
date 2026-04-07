@@ -1,7 +1,11 @@
 aid: s-and-p-global
-url: https://raw.githubusercontent.com/api-evangelist/s-and-p-global/refs/heads/main/apis.yml
+url: 
+  https://raw.githubusercontent.com/api-evangelist/s-and-p-global/refs/heads/main/apis.yml
 modified: '2026-03-21'
 apis: []
 common:
   - type: Website
     url: https://www.s-and-p-global.com
+description: >-
+  S&P Global is a leading provider of credit ratings, benchmarks, analytics, and workflow
+  solutions in the global capital, commodity, and automotive markets.
