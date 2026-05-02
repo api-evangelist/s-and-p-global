@@ -1,0 +1,75 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://api.link.kensho.com/link",
+    "headers": {
+      "Authorization": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...",
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    "body": {
+      "mentions": [
+        {
+          "text": "Apple Inc",
+          "identifierType": "name"
+        },
+        {
+          "text": "MSFT",
+          "identifierType": "ticker"
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "results": [
+        {
+          "mention": {
+            "text": "Apple Inc",
+            "identifierType": "name"
+          },
+          "candidates": [
+            {
+              "keid": "keid_a1b2c3d4",
+              "name": "Apple Inc.",
+              "entityType": "company",
+              "confidence": 0.99,
+              "crossReferences": {
+                "spglobalCompanyId": "0078552",
+                "ticker": "AAPL",
+                "cusip": "037833100",
+                "isin": "US0378331005",
+                "lei": "HWUPKR0MPOU8FGXBT394"
+              }
+            }
+          ]
+        },
+        {
+          "mention": {
+            "text": "MSFT",
+            "identifierType": "ticker"
+          },
+          "candidates": [
+            {
+              "keid": "keid_e5f6g7h8",
+              "name": "Microsoft Corporation",
+              "entityType": "company",
+              "confidence": 0.98,
+              "crossReferences": {
+                "spglobalCompanyId": "0117905",
+                "ticker": "MSFT",
+                "cusip": "594918104",
+                "isin": "US5949181045",
+                "lei": "INR2EJN1ERAN0W5ZP974"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

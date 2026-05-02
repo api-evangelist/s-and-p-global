@@ -54,3 +54,28 @@ terms:
       Non-traditional data sources (satellite imagery, credit card
       transactions, web traffic) offered through the S&P Global Marketplace
       for investment research and risk analysis.
+  - term: Kensho Entity Identifier (KEID)
+    definition: >-
+      A canonical identifier assigned by Kensho Technologies (an S&P Global
+      company) to uniquely identify financial entities across all S&P Global
+      data assets, enabling cross-product data integration.
+  - term: Entity Resolution
+    definition: >-
+      The process of determining whether two entity references (names,
+      tickers, identifiers) refer to the same real-world entity, and mapping
+      them to a canonical identifier such as a KEID.
+  - term: CUSIP
+    definition: >-
+      Committee on Uniform Securities Identification Procedures — a 9-character
+      alphanumeric identifier for North American securities, managed by S&P
+      Global on behalf of the American Bankers Association.
+  - term: ISIN
+    definition: >-
+      International Securities Identification Number — a 12-character
+      alphanumeric code that uniquely identifies a specific security globally,
+      used alongside CUSIP for cross-border entity linking.
+  - term: Legal Entity Identifier (LEI)
+    definition: >-
+      A 20-character ISO standard code that uniquely identifies legal entities
+      participating in financial transactions worldwide, used in regulatory
+      reporting and entity resolution.

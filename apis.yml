@@ -98,6 +98,8 @@ apis:
     properties:
       - type: Documentation
         url: https://api.link.kensho.com/docs/guides/rest-api/
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/api-evangelist/s-and-p-global/refs/heads/main/openapi/s-and-p-global-kensho-link-openapi.yml
 common:
   - type: Website
     url: https://www.spglobal.com

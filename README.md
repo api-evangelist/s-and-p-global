@@ -33,30 +33,34 @@ API providing programmatic access to the S&P Global Marketplace catalog of premi
 
 ### Kensho Link API
 
-S&P Global Kensho Link REST API for entity resolution and linking across financial instruments, companies, and other entities.
+S&P Global Kensho Link REST API for entity resolution and linking across financial instruments, companies, and other entities. Provides canonical entity identifiers (KEIDs) that link across all S&P Global data assets.
 
 - **Base URL:** `https://api.link.kensho.com`
 - **Documentation:** [https://api.link.kensho.com/docs/guides/rest-api/](https://api.link.kensho.com/docs/guides/rest-api/)
+- **OpenAPI:** [openapi/s-and-p-global-kensho-link-openapi.yml](openapi/s-and-p-global-kensho-link-openapi.yml)
 
 ## OpenAPI Specifications
 
 | API | File |
 |-----|------|
 | Commodity Insights API | [openapi/s-and-p-global-commodity-insights-openapi.yml](openapi/s-and-p-global-commodity-insights-openapi.yml) |
+| Kensho Link API | [openapi/s-and-p-global-kensho-link-openapi.yml](openapi/s-and-p-global-kensho-link-openapi.yml) |
 
 ## Capabilities
 
-Naftiko capabilities for S&P Global commodity market data workflows.
+Naftiko capabilities for S&P Global data workflows.
 
 | Capability | Description |
 |-----------|-------------|
 | [capabilities/commodity-market-data.yaml](capabilities/commodity-market-data.yaml) | Commodity market data workflow for energy traders and analysts |
+| [capabilities/financial-data-analytics.yaml](capabilities/financial-data-analytics.yaml) | Unified financial data analytics combining commodity pricing and entity resolution |
 
 ### Shared Definitions
 
 | API | File |
 |-----|------|
 | Commodity Insights | [capabilities/shared/commodity-insights.yaml](capabilities/shared/commodity-insights.yaml) |
+| Kensho Link | [capabilities/shared/kensho-link.yaml](capabilities/shared/kensho-link.yaml) |
 
 ## JSON Schema
 
@@ -81,6 +85,7 @@ Naftiko capabilities for S&P Global commodity market data workflows.
 | Example | File |
 |---------|------|
 | Get Current Market Data | [examples/s-and-p-global-get-current-market-data-example.json](examples/s-and-p-global-get-current-market-data-example.json) |
+| Link Financial Entity | [examples/s-and-p-global-link-entity-example.json](examples/s-and-p-global-link-entity-example.json) |
 
 ## Rules
 

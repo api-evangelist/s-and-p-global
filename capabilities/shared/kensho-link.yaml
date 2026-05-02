@@ -1,0 +1,175 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Kensho Link API"
+  description: "S&P Global Kensho Link entity resolution API providing canonical entity identifiers (KEIDs) that link financial entities across S&P Global data assets including Capital IQ, Market Intelligence, and Platts."
+  tags:
+    - S&P Global
+    - Kensho
+    - Entity Resolution
+    - Data Linking
+    - Financial Data
+  created: "2026-05-02"
+  modified: "2026-05-02"
+
+binds:
+  - namespace: env
+    keys:
+      KENSHO_LINK_TOKEN: KENSHO_LINK_TOKEN
+
+capability:
+  consumes:
+    - type: http
+      namespace: kensho-link
+      baseUri: https://api.link.kensho.com
+      description: "Kensho Link entity resolution REST API"
+      authentication:
+        type: bearer
+        token: "{{KENSHO_LINK_TOKEN}}"
+      resources:
+        - name: link
+          path: /link
+          description: "Entity mention resolution to canonical KEIDs"
+          operations:
+            - name: link-entity
+              method: POST
+              description: "Resolve entity mentions to canonical Kensho Entity Identifiers"
+              inputParameters: []
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  mentions: "{{tools.mentions}}"
+                  context: "{{tools.context}}"
+        - name: entity
+          path: /entity
+          description: "Entity record retrieval by KEID"
+          operations:
+            - name: get-entity
+              method: GET
+              description: "Get full entity record including aliases and cross-references by KEID"
+              inputParameters:
+                - name: keid
+                  in: path
+                  type: string
+                  required: true
+                  description: "Kensho Entity Identifier (KEID)"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: search
+          path: /search
+          description: "Entity search by name or identifier"
+          operations:
+            - name: search-entities
+              method: GET
+              description: "Search for entities by name, ticker, or other attributes"
+              inputParameters:
+                - name: q
+                  in: query
+                  type: string
+                  required: true
+                  description: "Search query (entity name, ticker, or identifier)"
+                - name: entityType
+                  in: query
+                  type: string
+                  required: false
+                  description: "Filter by entity type: company, person, instrument, fund, index"
+                - name: limit
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Maximum results to return (max 50)"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+  exposes:
+    - type: rest
+      port: 8101
+      namespace: kensho-link-rest
+      resources:
+        - path: /v1/entities/link
+          name: link
+          description: "Entity resolution"
+          operations:
+            - method: POST
+              name: link-entity
+              description: "Resolve entity mentions to canonical identifiers"
+              call: "kensho-link.link-entity"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/entities/{keid}
+          name: entity
+          description: "Entity record by KEID"
+          operations:
+            - method: GET
+              name: get-entity
+              description: "Get entity record by KEID"
+              call: "kensho-link.get-entity"
+              with:
+                keid: "rest.keid"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/entities/search
+          name: search
+          description: "Entity search"
+          operations:
+            - method: GET
+              name: search-entities
+              description: "Search for entities by name or identifier"
+              call: "kensho-link.search-entities"
+              with:
+                q: "rest.q"
+                entityType: "rest.entityType"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9101
+      namespace: kensho-link-mcp
+      transport: http
+      tools:
+        - name: link-financial-entity
+          description: "Resolve a financial entity mention (company name, ticker, CUSIP, ISIN) to its canonical Kensho Entity Identifier (KEID) and cross-references to S&P Global data systems"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "kensho-link.link-entity"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-entity-by-keid
+          description: "Get the full canonical entity record for a KEID including all aliases, cross-references (ticker, CUSIP, ISIN, LEI), and S&P Global identifiers"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "kensho-link.get-entity"
+          with:
+            keid: "tools.keid"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: search-financial-entities
+          description: "Search for financial entities by name, ticker, or identifier. Returns ranked candidates with confidence scores for entity disambiguation"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "kensho-link.search-entities"
+          with:
+            q: "tools.q"
+            entityType: "tools.entityType"
+          outputParameters:
+            - type: object
+              mapping: "$."
