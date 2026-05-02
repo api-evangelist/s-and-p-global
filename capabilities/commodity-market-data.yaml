@@ -1,0 +1,145 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "S&P Global Commodity Market Data"
+  description: "Commodity market data workflow combining real-time and historical price assessments, symbol discovery, and incremental data sync from S&P Global Commodity Insights (Platts). Used by energy traders, analysts, risk managers, and quant teams."
+  tags:
+    - S&P Global
+    - Commodity Insights
+    - Energy Markets
+    - Market Data
+    - Trading
+    - Analytics
+  created: "2026-05-02"
+  modified: "2026-05-02"
+
+binds:
+  - namespace: env
+    keys:
+      SPG_CI_ACCESS_TOKEN: SPG_CI_ACCESS_TOKEN
+
+capability:
+  consumes:
+    - import: spg-commodity-insights
+      location: ./shared/commodity-insights.yaml
+
+  exposes:
+    - type: rest
+      port: 8080
+      namespace: commodity-market-data-api
+      description: "Unified REST API for S&P Global commodity market data access."
+      resources:
+        - path: /v1/prices/current
+          name: current-prices
+          description: "Current commodity price assessments"
+          operations:
+            - method: GET
+              name: get-current-prices
+              description: "Get current price assessments for specified commodity symbols"
+              call: "spg-commodity-insights.get-current-market-data"
+              with:
+                symbol: "rest.symbol"
+                format: "rest.format"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/prices/history
+          name: price-history
+          description: "Historical commodity price assessments"
+          operations:
+            - method: GET
+              name: get-price-history
+              description: "Get historical price assessments over a date range"
+              call: "spg-commodity-insights.get-historical-market-data"
+              with:
+                symbol: "rest.symbol"
+                startDate: "rest.startDate"
+                endDate: "rest.endDate"
+                pageSize: "rest.pageSize"
+                page: "rest.page"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/symbols
+          name: symbols
+          description: "Commodity symbol reference data"
+          operations:
+            - method: GET
+              name: list-symbols
+              description: "List available commodity symbols with metadata"
+              call: "spg-commodity-insights.list-symbols"
+              with:
+                commodityName: "rest.commodityName"
+                assessmentFrequency: "rest.assessmentFrequency"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/symbols/modified
+          name: modified-symbols
+          description: "Symbols modified since a date"
+          operations:
+            - method: GET
+              name: get-modified-symbols
+              description: "Get symbols modified since a date for incremental sync"
+              call: "spg-commodity-insights.get-modified-symbols"
+              with:
+                modifiedDate: "rest.modifiedDate"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9090
+      namespace: commodity-market-data-mcp
+      transport: http
+      description: "MCP server for AI-assisted commodity market data analysis and energy market research."
+      tools:
+        - name: get-current-commodity-prices
+          description: "Get the latest price assessments for Platts commodity symbols (e.g., PCAAS00 for Dated Brent crude oil). Returns current value, unit of measure, currency, and assessment date."
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "spg-commodity-insights.get-current-market-data"
+          with:
+            symbol: "tools.symbol"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-historical-commodity-prices
+          description: "Get historical commodity price assessments for a date range. Use for time series analysis, backtesting, and trend analysis in energy and commodity markets."
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "spg-commodity-insights.get-historical-market-data"
+          with:
+            symbol: "tools.symbol"
+            startDate: "tools.startDate"
+            endDate: "tools.endDate"
+            pageSize: "tools.pageSize"
+            page: "tools.page"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-commodity-symbols
+          description: "List available Platts commodity symbols with descriptions, units, and assessment frequency. Filter by commodity name (Crude Oil, Natural Gas, LNG, etc.)."
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "spg-commodity-insights.list-symbols"
+          with:
+            commodityName: "tools.commodityName"
+            assessmentFrequency: "tools.assessmentFrequency"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-modified-commodity-symbols
+          description: "Get list of commodity symbols with updated price assessments since a given date. Use for incremental data sync to keep commodity price databases current."
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "spg-commodity-insights.get-modified-symbols"
+          with:
+            modifiedDate: "tools.modifiedDate"
+          outputParameters:
+            - type: object
+              mapping: "$."

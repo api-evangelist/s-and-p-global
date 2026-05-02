@@ -1,0 +1,260 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "S&P Global Commodity Insights API"
+  description: "S&P Global Commodity Insights (Platts) API providing real-time and historical energy and commodity market data including oil, gas, petrochemicals, power, shipping, metals, and agriculture price assessments."
+  tags:
+    - S&P Global
+    - Commodity Insights
+    - Energy Markets
+    - Market Data
+    - Platts
+  created: "2026-05-02"
+  modified: "2026-05-02"
+
+binds:
+  - namespace: env
+    keys:
+      SPG_CI_USERNAME: SPG_CI_USERNAME
+      SPG_CI_PASSWORD: SPG_CI_PASSWORD
+      SPG_CI_ACCESS_TOKEN: SPG_CI_ACCESS_TOKEN
+
+capability:
+  consumes:
+    - type: http
+      namespace: spg-commodity-insights
+      baseUri: https://api.platts.com
+      description: "S&P Global Commodity Insights REST API"
+      authentication:
+        type: bearer
+        token: "{{SPG_CI_ACCESS_TOKEN}}"
+      resources:
+        - name: authentication
+          path: /auth/api
+          description: "Token authentication"
+          operations:
+            - name: authenticate
+              method: POST
+              description: "Exchange credentials for Bearer access token"
+              inputParameters: []
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  username: "{{tools.username}}"
+                  password: "{{tools.password}}"
+        - name: current-market-data
+          path: /market-data/v1/value/current
+          description: "Current commodity price assessments"
+          operations:
+            - name: get-current-market-data
+              method: GET
+              description: "Get most recent assessment values for specified commodity symbols"
+              inputParameters:
+                - name: symbol
+                  in: query
+                  type: string
+                  required: true
+                  description: "Comma-separated Platts symbol codes (e.g., PCAAS00,AAPTA00)"
+                - name: format
+                  in: query
+                  type: string
+                  required: false
+                  description: "Response format: json or xml"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: historical-market-data
+          path: /market-data/v1/value/history
+          description: "Historical commodity price assessments"
+          operations:
+            - name: get-historical-market-data
+              method: GET
+              description: "Get historical assessment values for commodity symbols over a date range"
+              inputParameters:
+                - name: symbol
+                  in: query
+                  type: string
+                  required: true
+                  description: "Comma-separated commodity symbol codes"
+                - name: startDate
+                  in: query
+                  type: string
+                  required: true
+                  description: "Start date (YYYY-MM-DD)"
+                - name: endDate
+                  in: query
+                  type: string
+                  required: true
+                  description: "End date (YYYY-MM-DD)"
+                - name: pageSize
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Records per page (max 1000)"
+                - name: page
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Page number"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: symbols
+          path: /market-data/v1/symbols
+          description: "Commodity symbol reference data"
+          operations:
+            - name: list-symbols
+              method: GET
+              description: "List available commodity symbols with descriptions and units"
+              inputParameters:
+                - name: commodityName
+                  in: query
+                  type: string
+                  required: false
+                  description: "Filter by commodity name"
+                - name: assessmentFrequency
+                  in: query
+                  type: string
+                  required: false
+                  description: "Filter by frequency: Daily, Weekly, Monthly"
+                - name: pageSize
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Records per page"
+                - name: page
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Page number"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: modified-symbols
+          path: /market-data/v1/modified-date
+          description: "Symbols modified since a given date"
+          operations:
+            - name: get-modified-symbols
+              method: GET
+              description: "Get symbols whose values have been modified since a date"
+              inputParameters:
+                - name: modifiedDate
+                  in: query
+                  type: string
+                  required: true
+                  description: "Return symbols modified after this date (YYYY-MM-DD)"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+  exposes:
+    - type: rest
+      port: 8100
+      namespace: commodity-insights-rest
+      resources:
+        - path: /v1/market-data/current
+          name: current-market-data
+          description: "Current commodity prices"
+          operations:
+            - method: GET
+              name: get-current-market-data
+              description: "Get current market data"
+              call: "spg-commodity-insights.get-current-market-data"
+              with:
+                symbol: "rest.symbol"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/market-data/history
+          name: historical-market-data
+          description: "Historical commodity prices"
+          operations:
+            - method: GET
+              name: get-historical-market-data
+              description: "Get historical market data"
+              call: "spg-commodity-insights.get-historical-market-data"
+              with:
+                symbol: "rest.symbol"
+                startDate: "rest.startDate"
+                endDate: "rest.endDate"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/symbols
+          name: symbols
+          description: "Commodity symbol reference data"
+          operations:
+            - method: GET
+              name: list-symbols
+              description: "List commodity symbols"
+              call: "spg-commodity-insights.list-symbols"
+              with:
+                commodityName: "rest.commodityName"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9100
+      namespace: commodity-insights-mcp
+      transport: http
+      tools:
+        - name: get-current-commodity-prices
+          description: "Get current price assessments for one or more Platts commodity symbols"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "spg-commodity-insights.get-current-market-data"
+          with:
+            symbol: "tools.symbol"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-historical-commodity-prices
+          description: "Get historical price assessments for commodity symbols over a date range"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "spg-commodity-insights.get-historical-market-data"
+          with:
+            symbol: "tools.symbol"
+            startDate: "tools.startDate"
+            endDate: "tools.endDate"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-commodity-symbols
+          description: "List available Platts commodity symbols with descriptions, units of measure, and assessment frequency"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "spg-commodity-insights.list-symbols"
+          with:
+            commodityName: "tools.commodityName"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-modified-symbols
+          description: "Get commodity symbols with price assessments modified since a given date for incremental data sync"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "spg-commodity-insights.get-modified-symbols"
+          with:
+            modifiedDate: "tools.modifiedDate"
+          outputParameters:
+            - type: object
+              mapping: "$."

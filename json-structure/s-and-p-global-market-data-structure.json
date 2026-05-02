@@ -1,0 +1,48 @@
+{
+  "name": "S&P Global Commodity Market Data Point",
+  "description": "Structure of a commodity price assessment from the S&P Global Commodity Insights API",
+  "fields": [
+    {
+      "name": "symbol",
+      "type": "string",
+      "required": true,
+      "description": "Platts commodity symbol code (e.g., PCAAS00)"
+    },
+    {
+      "name": "assessDate",
+      "type": "date",
+      "required": true,
+      "description": "Date of the price assessment"
+    },
+    {
+      "name": "value",
+      "type": "number",
+      "required": true,
+      "description": "Assessment value (price)"
+    },
+    {
+      "name": "uom",
+      "type": "string",
+      "required": true,
+      "description": "Unit of measure (e.g., USD/BBL, USD/MMBTU)"
+    },
+    {
+      "name": "currency",
+      "type": "string",
+      "required": true,
+      "description": "ISO 4217 currency code"
+    },
+    {
+      "name": "bate",
+      "type": "string",
+      "required": false,
+      "description": "Buy/Ask/Trade/Close indicator (B, A, T, C)"
+    },
+    {
+      "name": "modDate",
+      "type": "date-time",
+      "required": false,
+      "description": "Last modification timestamp"
+    }
+  ]
+}

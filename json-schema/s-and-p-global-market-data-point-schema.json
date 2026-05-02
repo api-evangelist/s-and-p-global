@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/s-and-p-global/refs/heads/main/json-schema/s-and-p-global-market-data-point-schema.json",
+  "title": "S&P Global Commodity Market Data Point",
+  "description": "Schema for a commodity price assessment data point from the S&P Global Commodity Insights API",
+  "type": "object",
+  "properties": {
+    "symbol": {
+      "type": "string",
+      "description": "Commodity symbol code (Platts code)",
+      "example": "PCAAS00"
+    },
+    "assessDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Assessment date",
+      "example": "2024-12-01"
+    },
+    "value": {
+      "type": "number",
+      "format": "double",
+      "description": "Assessment value",
+      "example": 72.45
+    },
+    "uom": {
+      "type": "string",
+      "description": "Unit of measure",
+      "example": "USD/BBL"
+    },
+    "currency": {
+      "type": "string",
+      "description": "ISO 4217 currency code",
+      "example": "USD"
+    },
+    "bate": {
+      "type": "string",
+      "description": "Buy/Ask/Trade/End-of-day indicator",
+      "enum": ["B", "A", "T", "C"],
+      "example": "C"
+    },
+    "modDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Last modification timestamp"
+    }
+  },
+  "required": ["symbol", "assessDate", "value", "uom", "currency"]
+}

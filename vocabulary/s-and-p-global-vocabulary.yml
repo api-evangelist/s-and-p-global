@@ -1,0 +1,56 @@
+aid: s-and-p-global
+name: S&P Global Vocabulary
+description: >-
+  Vocabulary and terminology for S&P Global's data, analytics, and financial
+  intelligence products covering commodity markets, credit ratings, and
+  market intelligence.
+terms:
+  - term: Platts Symbol
+    definition: >-
+      A unique alphanumeric code (e.g., PCAAS00) identifying a specific
+      commodity price assessment in the S&P Global Commodity Insights
+      (formerly Platts) database.
+  - term: Assessment
+    definition: >-
+      A price determination made by S&P Global Commodity Insights editors
+      reflecting the fair market value of a commodity at a specific time,
+      using observable market transactions and verified data.
+  - term: BATE
+    definition: >-
+      Buy/Ask/Trade/End-of-day indicator for a price assessment:
+      B=Bid, A=Ask, T=Trade, C=Close (end-of-day assessment).
+  - term: Unit of Measure (UOM)
+    definition: >-
+      The pricing unit for a commodity assessment (e.g., USD/BBL for
+      dollars per barrel, USD/MMBTU for million British thermal units).
+  - term: Capital IQ
+    definition: >-
+      S&P Global's financial information platform providing data on
+      companies, industries, and markets for investment research and analysis.
+  - term: Market Intelligence
+    definition: >-
+      S&P Global's division providing data and workflow solutions for
+      investment professionals, including company fundamentals, credit data,
+      and alternative data.
+  - term: Credit Rating
+    definition: >-
+      An S&P Global Ratings opinion of the creditworthiness of a borrower
+      expressed through letter grades (AAA through D).
+  - term: Access Token
+    definition: >-
+      A Bearer JWT token valid for 3600 seconds used to authenticate
+      API requests to S&P Global Commodity Insights endpoints.
+  - term: Dated Brent
+    definition: >-
+      The Platts assessment for physical North Sea Brent crude oil cargoes
+      loading 10-21 days forward; the global crude oil benchmark.
+  - term: ESG
+    definition: >-
+      Environmental, Social, and Governance — a framework for evaluating
+      corporate sustainability and ethical impact used in S&P Global
+      indices and analytics products.
+  - term: Alternative Data
+    definition: >-
+      Non-traditional data sources (satellite imagery, credit card
+      transactions, web traffic) offered through the S&P Global Marketplace
+      for investment research and risk analysis.

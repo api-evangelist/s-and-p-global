@@ -1,0 +1,40 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://api.platts.com/market-data/v1/value/current?symbol=PCAAS00,AAPTA00",
+    "headers": {
+      "Authorization": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...",
+      "Accept": "application/json"
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "results": [
+        {
+          "symbol": "PCAAS00",
+          "assessDate": "2024-12-01",
+          "value": 72.45,
+          "uom": "USD/BBL",
+          "currency": "USD",
+          "bate": "C"
+        },
+        {
+          "symbol": "AAPTA00",
+          "assessDate": "2024-12-01",
+          "value": 3.218,
+          "uom": "USD/MMBTU",
+          "currency": "USD",
+          "bate": "C"
+        }
+      ],
+      "metadata": {
+        "count": 2,
+        "total": 2
+      }
+    }
+  }
+}
