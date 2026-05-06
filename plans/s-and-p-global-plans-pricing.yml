@@ -4,177 +4,49 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: S&P Global
 providerId: s-and-p-global
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: false
 tags:
   - Financial Data
   - Credit Ratings
   - Market Intelligence
-  - Commodity Insights
-  - Energy Markets
   - Capital Markets
-  - Fortune 500
-description: Machine-readable plans and pricing scaffold for this API provider. Conforms to the API Commons
-  Plans schema. Tier limits and prices are scaffold defaults; replace with provider-published values.
+  - B2B
+description: S&P Global is a financial data and ratings publisher whose API surfaces (Market Intelligence,
+  Ratings, Commodity Insights, Mobility) are licensed under enterprise agreements. No public per-call
+  prices, plan tiers, or self-serve sign-up surface exists; access requires a licensed subscription, often
+  with seat counts, feed types, and entitlement scopes negotiated per contract.
+sources:
+  - https://www.spglobal.com/
+  - https://www.spglobal.com/marketintelligence/
+notes: S&P Global does not publish API pricing publicly. Marketplace and product pages return 403 to scraping
+  and consistently route to "Contact Us" for commercial terms. Tier definitions, per-call prices, and
+  quotas are determined per contract and per business line (Market Intelligence, Ratings, Commodity Insights,
+  Mobility, Indices). This artifact is intentionally a single Contact Sales plan.
 plans:
-  - id: s-and-p-global-free
-    name: Free
-    type: freemium
-    description: Free entry tier for the S&P Global API surface. Intended for evaluation, prototyping,
-      and low-volume integrations. Real limits and pricing must be reconciled with the provider's published
-      plan documentation.
-    entries:
-      - label: API Requests
-        description: Monthly API request quota across all included endpoints
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 1000
-        timeFrame: month
-        geo: global
-        domains:
-          - https://api.platts.com
-          - https://api-ciq.marketintelligence.spglobal.com
-          - https://marketplace.spglobal.com
-          - https://api.link.kensho.com
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the free tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 10
-        timeFrame: minute
-        geo: global
-        domains:
-          - https://api.platts.com
-          - https://api-ciq.marketintelligence.spglobal.com
-          - https://marketplace.spglobal.com
-          - https://api.link.kensho.com
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-    elements:
-      - name: Public Documentation
-      - name: Community Support
-      - name: Sandbox Access
-      - name: S&P Global Commodity Insights API
-      - name: S&P Capital IQ Market Intelligence API
-      - name: S&P Global Marketplace Catalog API
-      - name: Kensho Link API
-  - id: s-and-p-global-pro
-    name: Professional
-    type: paid
-    description: Production tier for S&P Global. Provides higher quotas, priority support, and access
-      to the broader API portfolio. Pricing placeholder; align with the provider's pricing page.
-    entries:
-      - label: API Requests
-        description: Monthly API request quota
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 100000
-        timeFrame: month
-        geo: global
-        domains:
-          - https://api.platts.com
-          - https://api-ciq.marketintelligence.spglobal.com
-          - https://marketplace.spglobal.com
-          - https://api.link.kensho.com
-        unit: 1
-        price: TBD
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the professional tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 100
-        timeFrame: minute
-        geo: global
-        domains:
-          - https://api.platts.com
-          - https://api-ciq.marketintelligence.spglobal.com
-          - https://marketplace.spglobal.com
-          - https://api.link.kensho.com
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Overage
-        description: Per-request price after monthly quota is exceeded
-        name: overage
-        type: metered
-        metric: requests
-        limit: -1
-        timeFrame: month
-        geo: global
-        domains:
-          - https://api.platts.com
-          - https://api-ciq.marketintelligence.spglobal.com
-          - https://marketplace.spglobal.com
-          - https://api.link.kensho.com
-        unit: 1000
-        price: TBD
-        userMultiplied: false
-    elements:
-      - name: All Production Endpoints
-      - name: Email Support
-      - name: SLA Targets
-      - name: Webhook Subscriptions
-      - name: S&P Global Commodity Insights API
-      - name: S&P Capital IQ Market Intelligence API
-      - name: S&P Global Marketplace Catalog API
-      - name: Kensho Link API
-  - id: s-and-p-global-enterprise
-    name: Enterprise
+  - id: s-and-p-global-contact-sales
+    name: Contact Sales
     type: enterprise
-    description: Custom-negotiated tier for S&P Global. Includes dedicated capacity, contractual SLAs,
-      security review, data residency options, and named technical account management.
+    description: Enterprise-licensed access to S&P Global data products and APIs. Pricing and entitlements
+      are negotiated per business line and per use case.
     entries:
-      - label: API Requests
-        description: Negotiated request volume; -1 indicates uncapped subject to fair use
-        name: api_requests
-        type: quota
-        metric: requests
+      - label: Licensed API Access
+        name: licensed_access
+        type: flat
+        metric: varies
         limit: -1
-        timeFrame: month
-        geo: configurable
-        domains:
-          - https://api.platts.com
-          - https://api-ciq.marketintelligence.spglobal.com
-          - https://marketplace.spglobal.com
-          - https://api.link.kensho.com
+        timeFrame: usage
+        geo: global
         unit: 1
-        price: custom
-        userMultiplied: false
-      - label: Rate Limit
-        description: Negotiated burst and steady-state rate
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 1000
-        timeFrame: minute
-        geo: configurable
-        domains:
-          - https://api.platts.com
-          - https://api-ciq.marketintelligence.spglobal.com
-          - https://marketplace.spglobal.com
-          - https://api.link.kensho.com
-        unit: 1
-        price: custom
+        price: contact sales
         userMultiplied: false
     elements:
-      - name: Unlimited / Negotiated Volume
-      - name: 24/7 Dedicated Support
-      - name: Contractual SLA
-      - name: Security & Compliance Review
-      - name: Dedicated Account Manager
-      - name: Custom Data Residency
-      - name: S&P Global Commodity Insights API
-      - name: S&P Capital IQ Market Intelligence API
-      - name: S&P Global Marketplace Catalog API
-      - name: Kensho Link API
+      - name: S&P Capital IQ Pro / Market Intelligence
+      - name: S&P Global Ratings APIs
+      - name: S&P Global Commodity Insights (Platts) data feeds
+      - name: S&P Global Mobility data
+      - name: S&P Dow Jones Indices
+      - name: Entitlements managed via license / seat / feed contract
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

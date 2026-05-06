@@ -4,103 +4,34 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: S&P Global
 providerId: s-and-p-global
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: false
 tags:
   - Financial Data
-  - Credit Ratings
-  - Market Intelligence
-  - Commodity Insights
-  - Energy Markets
   - Capital Markets
-  - Fortune 500
+  - B2B
   - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the S&P Global API surface. Captures per-tier
-  quotas, burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to
-  be replaced with published provider limits.
-headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
-responseCodes:
-  throttled: 429
-  quotaExceeded: 429
-  serviceUnavailable: 503
+description: S&P Global does not publish API rate limits in any public developer or pricing surface. Limits
+  are imposed per-license, per-product, and per-feed and are documented inside the entitled developer
+  portal that follows contract signing. This artifact is intentionally a Contact Sales placeholder.
+sources:
+  - https://www.spglobal.com/
+notes: Public docs do not expose throttle numbers. Per-product portals (Market Intelligence, Ratings,
+  Commodity Insights) document their own throttles to entitled customers only.
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - S&P Global Commodity Insights API
-      - S&P Capital IQ Market Intelligence API
-      - S&P Global Marketplace Catalog API
-      - Kensho Link API
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - S&P Global Commodity Insights API
-      - S&P Capital IQ Market Intelligence API
-      - S&P Global Marketplace Catalog API
-      - Kensho Link API
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - S&P Global Commodity Insights API
-      - S&P Capital IQ Market Intelligence API
-      - S&P Global Marketplace Catalog API
-      - Kensho Link API
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - S&P Global Commodity Insights API
-      - S&P Capital IQ Market Intelligence API
-      - S&P Global Marketplace Catalog API
-      - Kensho Link API
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - S&P Global Commodity Insights API
-      - S&P Capital IQ Market Intelligence API
-      - S&P Global Marketplace Catalog API
-      - Kensho Link API
+  - name: Licensed API throttling
+    scope: account
+    metric: varies
+    limit: contact sales / per-license
+    notes: S&P Global enforces per-product, per-license throttles. Numeric values are released via the
+      entitled customer developer portal, not publicly.
 policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+  - name: Per-license entitlement
+    description: Throttles, daily caps, and concurrent connections are bound to the executed license and
+      change between Market Intelligence, Ratings, Commodity Insights, and Indices products.
+  - name: Contact Sales / Account team
+    description: Production limits and burst behavior are confirmed by the assigned S&P Global account
+      team; clients should not assume defaults.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
