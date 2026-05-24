@@ -117,6 +117,8 @@ common:
   url: https://www.marketplace.spglobal.com/en/solutions/api-solutions-(61953ac7-ea64-4fac-926a-feb7f846c2be)
 - type: SDKs
   url: https://pypi.org/project/spgci/
+- type: LLMsTxt
+  url: https://developer.spglobal.com/llms.txt
 features:
 - Credit Ratings
 - Market Data
