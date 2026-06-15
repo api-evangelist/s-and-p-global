@@ -1,0 +1,103 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kensho Link API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Entity Resolution",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Link Entity to Canonical Identifier",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.link.kensho.com/link",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Resolves one or more entity mentions to their canonical Kensho Entity Identifier (KEID). Accepts entity names, aliases, ticker symbols, CUSIP, ISIN, or other identifiers and returns the canonical entity record."
+        },
+        {
+          "info": {
+            "name": "Get Entity by KEID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.link.kensho.com/entity/:keid",
+            "params": [
+              {
+                "name": "keid",
+                "value": "",
+                "type": "path",
+                "description": "Kensho Entity Identifier (KEID) for the entity"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the full canonical entity record for a given Kensho Entity Identifier (KEID), including names, aliases, entity type, and cross-references to other S&P Global identifiers."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Search",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search Entities",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.link.kensho.com/search",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Search query string (entity name, ticker, or other identifier)"
+              },
+              {
+                "name": "entityType",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by entity type"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Search for entities by name, ticker symbol, or other attributes. Returns a ranked list of matching entity candidates with confidence scores."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,661 @@
+{
+  "item": [
+    {
+      "id": "1c939adb-6367-4d02-904c-05447c2ab136",
+      "name": "Entity Resolution",
+      "description": {
+        "content": "Entity linking and resolution operations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e02196f5-931c-434d-9f48-4897c66c4c64",
+          "name": "Link Entity to Canonical Identifier",
+          "request": {
+            "name": "Link Entity to Canonical Identifier",
+            "description": {
+              "content": "Resolves one or more entity mentions to their canonical Kensho Entity Identifier (KEID). Accepts entity names, aliases, ticker symbols, CUSIP, ISIN, or other identifiers and returns the canonical entity record.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "link"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mentions\": [\n    {\n      \"text\": \"<string>\",\n      \"identifierType\": \"<string>\"\n    },\n    {\n      \"text\": \"<string>\",\n      \"identifierType\": \"<string>\"\n    }\n  ],\n  \"context\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e3c096ee-d13e-41ba-854d-dd19471e8359",
+              "name": "Entity resolution results",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "link"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"mentions\": [\n    {\n      \"text\": \"Apple Inc\",\n      \"identifierType\": \"name\"\n    },\n    {\n      \"text\": \"Apple Inc\",\n      \"identifierType\": \"name\"\n    }\n  ],\n  \"context\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"mention\": {\n        \"text\": \"Apple Inc\",\n        \"identifierType\": \"name\"\n      },\n      \"candidates\": [\n        {\n          \"keid\": \"keid_abc12345\",\n          \"name\": \"Apple Inc.\",\n          \"entityType\": \"company\",\n          \"confidence\": 0.98,\n          \"crossReferences\": {\n            \"spglobalCompanyId\": \"0078552\",\n            \"ticker\": \"AAPL\",\n            \"cusip\": \"string\",\n            \"isin\": \"US0378331005\",\n            \"lei\": \"HWUPKR0MPOU8FGXBT394\"\n          }\n        },\n        {\n          \"keid\": \"keid_abc12345\",\n          \"name\": \"Apple Inc.\",\n          \"entityType\": \"company\",\n          \"confidence\": 0.98,\n          \"crossReferences\": {\n            \"spglobalCompanyId\": \"0078552\",\n            \"ticker\": \"AAPL\",\n            \"cusip\": \"string\",\n            \"isin\": \"US0378331005\",\n            \"lei\": \"HWUPKR0MPOU8FGXBT394\"\n          }\n        }\n      ]\n    },\n    {\n      \"mention\": {\n        \"text\": \"Apple Inc\",\n        \"identifierType\": \"name\"\n      },\n      \"candidates\": [\n        {\n          \"keid\": \"keid_abc12345\",\n          \"name\": \"Apple Inc.\",\n          \"entityType\": \"company\",\n          \"confidence\": 0.98,\n          \"crossReferences\": {\n            \"spglobalCompanyId\": \"0078552\",\n            \"ticker\": \"AAPL\",\n            \"cusip\": \"string\",\n            \"isin\": \"US0378331005\",\n            \"lei\": \"HWUPKR0MPOU8FGXBT394\"\n          }\n        },\n        {\n          \"keid\": \"keid_abc12345\",\n          \"name\": \"Apple Inc.\",\n          \"entityType\": \"company\",\n          \"confidence\": 0.98,\n          \"crossReferences\": {\n            \"spglobalCompanyId\": \"0078552\",\n            \"ticker\": \"AAPL\",\n            \"cusip\": \"string\",\n            \"isin\": \"US0378331005\",\n            \"lei\": \"HWUPKR0MPOU8FGXBT394\"\n          }\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "afe8a5b9-296d-4f9e-8b1e-45bd193dc9ae",
+              "name": "Invalid request format",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "link"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"mentions\": [\n    {\n      \"text\": \"Apple Inc\",\n      \"identifierType\": \"name\"\n    },\n    {\n      \"text\": \"Apple Inc\",\n      \"identifierType\": \"name\"\n    }\n  ],\n  \"context\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "47454140-b2cc-473d-93d7-fb62ce53b699",
+              "name": "Unauthorized - invalid or missing token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "link"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"mentions\": [\n    {\n      \"text\": \"Apple Inc\",\n      \"identifierType\": \"name\"\n    },\n    {\n      \"text\": \"Apple Inc\",\n      \"identifierType\": \"name\"\n    }\n  ],\n  \"context\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "68258bd4-b769-42c1-874c-0ab105e3a6da",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "link"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"mentions\": [\n    {\n      \"text\": \"Apple Inc\",\n      \"identifierType\": \"name\"\n    },\n    {\n      \"text\": \"Apple Inc\",\n      \"identifierType\": \"name\"\n    }\n  ],\n  \"context\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "763e966f-f838-4c44-b239-5a7df3a404ca",
+          "name": "Get Entity by KEID",
+          "request": {
+            "name": "Get Entity by KEID",
+            "description": {
+              "content": "Returns the full canonical entity record for a given Kensho Entity Identifier (KEID), including names, aliases, entity type, and cross-references to other S&P Global identifiers.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "entity",
+                ":keid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "keid",
+                  "description": "(Required) Kensho Entity Identifier (KEID) for the entity"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "6306a40c-606c-48c0-9df5-f2eb77c9c75f",
+              "name": "Entity record",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "entity",
+                    ":keid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "keid",
+                      "description": "(Required) Kensho Entity Identifier (KEID) for the entity"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"keid\": \"keid_abc12345\",\n  \"name\": \"Apple Inc.\",\n  \"aliases\": [\n    \"Apple\",\n    \"AAPL\"\n  ],\n  \"entityType\": \"company\",\n  \"description\": \"string\",\n  \"crossReferences\": {\n    \"spglobalCompanyId\": \"0078552\",\n    \"ticker\": \"AAPL\",\n    \"cusip\": \"string\",\n    \"isin\": \"US0378331005\",\n    \"lei\": \"HWUPKR0MPOU8FGXBT394\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1f476a20-e896-41b4-8839-d2e91c2c1765",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "entity",
+                    ":keid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "keid",
+                      "description": "(Required) Kensho Entity Identifier (KEID) for the entity"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "cddcf9a5-3359-49c1-9d1d-a960b51e6273",
+              "name": "Entity not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "entity",
+                    ":keid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "keid",
+                      "description": "(Required) Kensho Entity Identifier (KEID) for the entity"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "a8ec3163-31ed-4bcd-8c61-232439dbba3d",
+      "name": "Search",
+      "description": {
+        "content": "Entity search and discovery",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d166341c-2827-4ac3-8f56-66a77e2e33ea",
+          "name": "Search Entities",
+          "request": {
+            "name": "Search Entities",
+            "description": {
+              "content": "Search for entities by name, ticker symbol, or other attributes. Returns a ranked list of matching entity candidates with confidence scores.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "(Required) Search query string (entity name, ticker, or other identifier)"
+                },
+                {
+                  "disabled": false,
+                  "key": "entityType",
+                  "value": "<string>",
+                  "description": "Filter results by entity type"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Maximum number of results to return"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c382420a-d0b3-4bd2-a463-248a6bba8bd9",
+              "name": "Entity search results",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "Apple Inc"
+                    },
+                    {
+                      "key": "entityType",
+                      "value": "company"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"keid\": \"keid_abc12345\",\n      \"name\": \"Apple Inc.\",\n      \"entityType\": \"company\",\n      \"confidence\": 0.98,\n      \"crossReferences\": {\n        \"spglobalCompanyId\": \"0078552\",\n        \"ticker\": \"AAPL\",\n        \"cusip\": \"string\",\n        \"isin\": \"US0378331005\",\n        \"lei\": \"HWUPKR0MPOU8FGXBT394\"\n      }\n    },\n    {\n      \"keid\": \"keid_abc12345\",\n      \"name\": \"Apple Inc.\",\n      \"entityType\": \"company\",\n      \"confidence\": 0.98,\n      \"crossReferences\": {\n        \"spglobalCompanyId\": \"0078552\",\n        \"ticker\": \"AAPL\",\n        \"cusip\": \"string\",\n        \"isin\": \"US0378331005\",\n        \"lei\": \"HWUPKR0MPOU8FGXBT394\"\n      }\n    }\n  ],\n  \"total\": 4455\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "03dea071-47d6-4828-82cb-06f0cb4a6240",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "Apple Inc"
+                    },
+                    {
+                      "key": "entityType",
+                      "value": "company"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.link.kensho.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "7ee799fb-c88b-419b-8054-a70ddbf8428c",
+    "name": "Kensho Link API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "S&P Global Kensho Link REST API for entity resolution and linking across financial instruments, companies, people, and other entities. Provides a canonical entity identifier (KEID) layer that links entities across S&P Global data assets including Capital IQ, Market Intelligence, and Platts. Used for data integration and entity disambiguation in financial analytics.\n\nContact Support:\n Name: Kensho Technologies",
+      "type": "text/plain"
+    }
+  }
+}

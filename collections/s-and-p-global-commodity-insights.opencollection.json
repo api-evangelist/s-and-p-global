@@ -1,0 +1,195 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "S&P Global Commodity Insights API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Authenticate and Get Access Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.platts.com/auth/api",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Exchange API credentials for a Bearer access token. The token is valid for 3600 seconds (60 minutes). A refresh token valid for 7 days is also returned."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Market Data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Current Market Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.platts.com/market-data/v1/value/current",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of commodity symbol codes (e.g., PCAAS00, AAPTA00)"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Response format"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the most recent assessment values for specified commodity symbols."
+        },
+        {
+          "info": {
+            "name": "Get Historical Market Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.platts.com/market-data/v1/value/history",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated commodity symbol codes"
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date in YYYY-MM-DD format"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "End date in YYYY-MM-DD format"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Response format"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of records per page (max 1000)"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns historical assessment values for specified commodity symbols over a date range."
+        },
+        {
+          "info": {
+            "name": "Get Modified Symbols Since Date",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.platts.com/market-data/v1/modified-date",
+            "params": [
+              {
+                "name": "modifiedDate",
+                "value": "",
+                "type": "query",
+                "description": "Return symbols modified after this date (YYYY-MM-DD)"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns symbols whose values have been modified since a specified date. Useful for incremental data pulls."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Reference Data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Market Data Symbols",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.platts.com/market-data/v1/symbols",
+            "params": [
+              {
+                "name": "commodityName",
+                "value": "",
+                "type": "query",
+                "description": "Filter by commodity name (e.g., Crude Oil, Natural Gas)"
+              },
+              {
+                "name": "assessmentFrequency",
+                "value": "",
+                "type": "query",
+                "description": "Filter by assessment frequency"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of records per page (max 1000)"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns reference data for available commodity symbols, including descriptions, commodity types, and units of measure."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
