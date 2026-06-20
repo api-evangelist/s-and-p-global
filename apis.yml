@@ -8,7 +8,7 @@ description: >-
   worldwide. S&P Global APIs enable programmatic access to financial data, market prices, energy market data, credit
   ratings, and geospatial intelligence.
 type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/s-and-p-global/refs/heads/main/apis.yml
 tags:
   - Financial Data
