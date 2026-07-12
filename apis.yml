@@ -95,6 +95,10 @@ apis:
         url: >-
           https://raw.githubusercontent.com/api-evangelist/s-and-p-global/refs/heads/main/openapi/s-and-p-global-kensho-link-openapi.yml
 common:
+  - type: DomainSecurity
+    url: security/s-and-p-global-domain-security.yml
+  - type: Authentication
+    url: authentication/s-and-p-global-authentication.yml
   - type: Website
     url: https://www.spglobal.com
   - type: Developer

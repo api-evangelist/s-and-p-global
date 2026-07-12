@@ -1,0 +1,14 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/s-and-p-global-commodity-insights-openapi.yml, openapi/s-and-p-global-kensho-link-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: BearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  sources:
+  - openapi/s-and-p-global-commodity-insights-openapi.yml
+  - openapi/s-and-p-global-kensho-link-openapi.yml
