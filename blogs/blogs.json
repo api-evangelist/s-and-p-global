@@ -2,11 +2,13 @@
   "repo": "s-and-p-global",
   "feeds": [
     {
-      "source": "https://www.spglobal.com/en/research-insights/articles",
+      "source": "https://developer.spglobal.com/commodityinsights/api/getting-started?tab=authentication",
+      "feed_url": "https://developer.spglobal.com/commodityinsights/api/getting-started?tab=authentication",
+      "title": "",
       "saved": 0,
-      "error": "HTTP 403 Forbidden"
+      "method": "none"
     }
   ],
   "post_count": 0,
-  "fetched": "2026-06-27T13:07:48Z"
+  "fetched": "2026-07-11T11:50:51Z"
 }

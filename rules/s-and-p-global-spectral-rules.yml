@@ -1,83 +1,140 @@
-extends: spectral:oas
+# s-and-p-global — Spectral ruleset (strengthened)
+# Plain Spectral. Existing hand-authored rules preserved; measured rules added
+# from this provider's own OpenAPI conventions by strengthen_ruleset.py,
+# then self-validated against the spec.
+#
+# Provenance:
+#   - servers-https-only: 100% of servers already https (error)
+#   - query-params-casing: snake @ 50% (n=16)
+#   - operationid-casing: camel @ 88% (n=8)
+#   - schema-names-casing: pascal @ 100% (n=18)
+#   - schema-properties-casing: snake @ 78% (n=60)
+#   - operation-security-required: 7/8 ops declare per-op security
+#   - pagination params observed: ['limit', 'page', 'pageSize']
+#   - merge: kept 8 existing, added 6 measured, upgraded 0
+#   - added: servers-https-only, query-params-casing, schema-names-casing, schema-properties-casing, security-schemes-defined, no-empty-descriptions
+extends:
+  - spectral:oas
 rules:
   spg-summary-title-case:
     description: All operation summaries must use Title Case
-    message: "Operation summary '{{value}}' must use Title Case"
+    message: Operation summary '{{value}}' must use Title Case
     severity: warn
-    given: "$.paths[*][*].summary"
+    given: $.paths[*][*].summary
     then:
       function: pattern
       functionOptions:
-        match: "^[A-Z][a-zA-Z0-9]*(\\s[A-Z&][a-zA-Z0-9]*)*$"
-
+        match: ^[A-Z][a-zA-Z0-9]*(\s[A-Z&][a-zA-Z0-9]*)*$
   spg-tags-title-case:
     description: All tags must use Title Case
-    message: "Tag '{{value}}' must use Title Case"
+    message: Tag '{{value}}' must use Title Case
     severity: warn
-    given: "$.paths[*][*].tags[*]"
+    given: $.paths[*][*].tags[*]
     then:
       function: pattern
       functionOptions:
-        match: "^[A-Z][a-zA-Z0-9 &]*$"
-
+        match: ^[A-Z][a-zA-Z0-9 &]*$
   spg-bearer-auth-required:
     description: All non-auth operations must use Bearer token authentication
-    message: "Operations must use Bearer authentication"
+    message: Operations must use Bearer authentication
     severity: error
-    given: "$.paths[?(!@ == '/auth/api')][get,post,put,patch,delete]"
+    given: $.paths[?(!@ == '/auth/api')][get,post,put,patch,delete]
     then:
       field: security
       function: truthy
-
   spg-operation-ids-camel-case:
     description: Operation IDs must use camelCase
-    message: "Operation ID '{{value}}' must use camelCase"
+    message: Operation ID '{{value}}' must use camelCase
     severity: warn
-    given: "$.paths[*][*].operationId"
+    given: $.paths[*][*].operationId
     then:
       function: pattern
       functionOptions:
-        match: "^[a-z][a-zA-Z0-9]*$"
-
+        match: ^[a-z][a-zA-Z0-9]*$
   spg-date-params-format:
     description: Date parameters must use YYYY-MM-DD format
-    message: "Date query parameters must be formatted as YYYY-MM-DD"
+    message: Date query parameters must be formatted as YYYY-MM-DD
     severity: warn
-    given: "$.paths[*][*].parameters[?(@.name =~ /[Dd]ate/)]"
+    given: $.paths[*][*].parameters[?(@.name =~ /[Dd]ate/)]
     then:
       field: schema.format
       function: enumeration
       functionOptions:
         values:
-          - date
-          - date-time
-
+        - date
+        - date-time
   spg-pagination-params:
     description: List operations should include pageSize and page parameters
-    message: "Collection GET endpoints should include pageSize and page parameters"
+    message: Collection GET endpoints should include pageSize and page parameters
     severity: warn
-    given: "$.paths[*][get]"
+    given: $.paths[*][get]
     then:
       function: schema
       functionOptions:
         schema:
           type: object
-
   spg-parameters-have-descriptions:
     description: All parameters must have descriptions
-    message: "Parameter must include a description"
+    message: Parameter must include a description
     severity: warn
-    given: "$.paths[*][*].parameters[*]"
+    given: $.paths[*][*].parameters[*]
     then:
       field: description
       function: truthy
-
   spg-schema-names-pascal-case:
     description: Component schema names must use PascalCase
-    message: "Schema name must use PascalCase"
+    message: Schema name must use PascalCase
     severity: warn
-    given: "$.components.schemas[*]~"
+    given: $.components.schemas[*]~
     then:
       function: pattern
       functionOptions:
-        match: "^[A-Z][a-zA-Z0-9&]*$"
+        match: ^[A-Z][a-zA-Z0-9&]*$
+  servers-https-only:
+    description: Server URLs must use HTTPS.
+    severity: error
+    given: $.servers[*].url
+    then:
+      function: pattern
+      functionOptions:
+        match: ^https://
+  query-params-casing:
+    description: Query parameters should be snake_case (the dominant convention in this API).
+    severity: info
+    given: $.paths[*][get,post,put,patch,delete].parameters[?(@.in=='query')]
+    then:
+      field: name
+      function: casing
+      functionOptions:
+        type: snake
+  schema-names-casing:
+    description: Component schema names should be PascalCase (the dominant convention in this API).
+    severity: warn
+    given: $.components.schemas
+    then:
+      field: '@key'
+      function: casing
+      functionOptions:
+        type: pascal
+  schema-properties-casing:
+    description: Schema properties should be snake_case (the dominant convention in this API).
+    severity: info
+    given: $.components.schemas[*].properties
+    then:
+      field: '@key'
+      function: casing
+      functionOptions:
+        type: snake
+  security-schemes-defined:
+    description: Security schemes should be defined in components.
+    severity: warn
+    given: $.components
+    then:
+      field: securitySchemes
+      function: truthy
+  no-empty-descriptions:
+    description: Descriptions must not be empty strings.
+    severity: warn
+    given: $..description
+    then:
+      function: truthy
