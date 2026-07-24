@@ -1,0 +1,235 @@
+openapi: 3.0.3
+info:
+  title: S&P Global Commodity Insights Authentication Market Data API
+  description: HTTP-based RESTful API providing access to energy and commodity market data through the S&P Global Commodity Insights (formerly Platts) platform. Covers market data, reference data, and historical prices for oil, gas, petrochemicals, power, shipping, metals, and agriculture. Supports JSON and XML response formats.
+  version: 1.0.0
+  contact:
+    name: S&P Global Developer Portal
+    url: https://developer.spglobal.com/
+  termsOfService: https://www.spglobal.com/en/terms-of-use
+servers:
+- url: https://api.platts.com
+  description: S&P Global Commodity Insights production API
+- url: https://developer.platts.com
+  description: S&P Global Commodity Insights developer portal API
+tags:
+- name: Market Data
+  description: Real-time and historical commodity market prices
+paths:
+  /market-data/v1/value/current:
+    get:
+      operationId: getCurrentMarketData
+      summary: Get Current Market Data
+      description: Returns the most recent assessment values for specified commodity symbols.
+      tags:
+      - Market Data
+      security:
+      - BearerAuth: []
+      parameters:
+      - name: symbol
+        in: query
+        required: true
+        description: Comma-separated list of commodity symbol codes (e.g., PCAAS00, AAPTA00)
+        schema:
+          type: string
+          example: PCAAS00,AAPTA00
+      - name: format
+        in: query
+        required: false
+        description: Response format
+        schema:
+          type: string
+          enum:
+          - json
+          - xml
+          default: json
+      responses:
+        '200':
+          description: Current market data values
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MarketDataResponse'
+        '401':
+          description: Unauthorized - invalid or expired token
+  /market-data/v1/value/history:
+    get:
+      operationId: getHistoricalMarketData
+      summary: Get Historical Market Data
+      description: Returns historical assessment values for specified commodity symbols over a date range.
+      tags:
+      - Market Data
+      security:
+      - BearerAuth: []
+      parameters:
+      - name: symbol
+        in: query
+        required: true
+        description: Comma-separated commodity symbol codes
+        schema:
+          type: string
+          example: PCAAS00
+      - name: startDate
+        in: query
+        required: true
+        description: Start date in YYYY-MM-DD format
+        schema:
+          type: string
+          format: date
+          example: '2024-01-01'
+      - name: endDate
+        in: query
+        required: true
+        description: End date in YYYY-MM-DD format
+        schema:
+          type: string
+          format: date
+          example: '2024-12-31'
+      - name: format
+        in: query
+        required: false
+        description: Response format
+        schema:
+          type: string
+          enum:
+          - json
+          - xml
+          default: json
+      - name: pageSize
+        in: query
+        required: false
+        description: Number of records per page (max 1000)
+        schema:
+          type: integer
+          maximum: 1000
+          default: 100
+      - name: page
+        in: query
+        required: false
+        description: Page number for pagination
+        schema:
+          type: integer
+          default: 1
+      responses:
+        '200':
+          description: Historical market data values
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HistoricalDataResponse'
+  /market-data/v1/modified-date:
+    get:
+      operationId: getModifiedSymbols
+      summary: Get Modified Symbols Since Date
+      description: Returns symbols whose values have been modified since a specified date. Useful for incremental data pulls.
+      tags:
+      - Market Data
+      security:
+      - BearerAuth: []
+      parameters:
+      - name: modifiedDate
+        in: query
+        required: true
+        description: Return symbols modified after this date (YYYY-MM-DD)
+        schema:
+          type: string
+          format: date
+          example: '2024-06-01'
+      responses:
+        '200':
+          description: List of modified symbols
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModifiedSymbolsResponse'
+components:
+  schemas:
+    HistoricalDataResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/MarketDataPoint'
+        metadata:
+          $ref: '#/components/schemas/ResponseMetadata'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    MarketDataResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/MarketDataPoint'
+        metadata:
+          $ref: '#/components/schemas/ResponseMetadata'
+    MarketDataPoint:
+      type: object
+      properties:
+        symbol:
+          type: string
+          description: Commodity symbol code
+          example: PCAAS00
+        assessDate:
+          type: string
+          format: date
+          description: Assessment date
+          example: '2024-12-01'
+        value:
+          type: number
+          format: double
+          description: Assessment value
+          example: 72.45
+        uom:
+          type: string
+          description: Unit of measure
+          example: USD/BBL
+        currency:
+          type: string
+          description: Currency code
+          example: USD
+        bate:
+          type: string
+          description: Buy/Ask/Trade/End-of-day indicator
+          example: C
+    ModifiedSymbolsResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: string
+            description: Modified symbol code
+        count:
+          type: integer
+          description: Total number of modified symbols
+    ResponseMetadata:
+      type: object
+      properties:
+        count:
+          type: integer
+          description: Number of records in response
+        total:
+          type: integer
+          description: Total records available
+    Pagination:
+      type: object
+      properties:
+        page:
+          type: integer
+          description: Current page number
+        pageSize:
+          type: integer
+          description: Records per page
+        totalPages:
+          type: integer
+          description: Total number of pages
+        totalCount:
+          type: integer
+          description: Total record count
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

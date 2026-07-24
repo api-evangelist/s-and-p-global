@@ -1,0 +1,207 @@
+openapi: 3.0.3
+info:
+  title: S&P Global Commodity Insights Authentication Entity Resolution API
+  description: HTTP-based RESTful API providing access to energy and commodity market data through the S&P Global Commodity Insights (formerly Platts) platform. Covers market data, reference data, and historical prices for oil, gas, petrochemicals, power, shipping, metals, and agriculture. Supports JSON and XML response formats.
+  version: 1.0.0
+  contact:
+    name: S&P Global Developer Portal
+    url: https://developer.spglobal.com/
+  termsOfService: https://www.spglobal.com/en/terms-of-use
+servers:
+- url: https://api.platts.com
+  description: S&P Global Commodity Insights production API
+- url: https://developer.platts.com
+  description: S&P Global Commodity Insights developer portal API
+tags:
+- name: Entity Resolution
+  description: Entity linking and resolution operations
+paths:
+  /link:
+    post:
+      operationId: linkEntity
+      summary: Link Entity to Canonical Identifier
+      description: Resolves one or more entity mentions to their canonical Kensho Entity Identifier (KEID). Accepts entity names, aliases, ticker symbols, CUSIP, ISIN, or other identifiers and returns the canonical entity record.
+      tags:
+      - Entity Resolution
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LinkRequest'
+      responses:
+        '200':
+          description: Entity resolution results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LinkResponse'
+        '400':
+          description: Invalid request format
+        '401':
+          description: Unauthorized - invalid or missing token
+        '429':
+          description: Rate limit exceeded
+  /entity/{keid}:
+    get:
+      operationId: getEntity
+      summary: Get Entity by KEID
+      description: Returns the full canonical entity record for a given Kensho Entity Identifier (KEID), including names, aliases, entity type, and cross-references to other S&P Global identifiers.
+      tags:
+      - Entity Resolution
+      security:
+      - BearerAuth: []
+      parameters:
+      - name: keid
+        in: path
+        required: true
+        description: Kensho Entity Identifier (KEID) for the entity
+        schema:
+          type: string
+          example: keid_abc12345
+      responses:
+        '200':
+          description: Entity record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Entity'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Entity not found
+components:
+  schemas:
+    EntityCandidate:
+      type: object
+      properties:
+        keid:
+          type: string
+          description: Kensho Entity Identifier
+          example: keid_abc12345
+        name:
+          type: string
+          description: Canonical entity name
+          example: Apple Inc.
+        entityType:
+          type: string
+          description: Entity type classification
+          example: company
+        confidence:
+          type: number
+          format: double
+          description: Confidence score for this candidate (0.0 to 1.0)
+          minimum: 0
+          maximum: 1
+          example: 0.98
+        crossReferences:
+          $ref: '#/components/schemas/CrossReferences'
+    Entity:
+      type: object
+      properties:
+        keid:
+          type: string
+          description: Kensho Entity Identifier
+          example: keid_abc12345
+        name:
+          type: string
+          description: Canonical entity name
+          example: Apple Inc.
+        aliases:
+          type: array
+          description: Alternative names and aliases
+          items:
+            type: string
+          example:
+          - Apple
+          - AAPL
+        entityType:
+          type: string
+          description: Entity type classification
+          example: company
+        description:
+          type: string
+          description: Brief entity description
+        crossReferences:
+          $ref: '#/components/schemas/CrossReferences'
+    LinkResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/LinkResult'
+    LinkRequest:
+      type: object
+      required:
+      - mentions
+      properties:
+        mentions:
+          type: array
+          description: List of entity mentions to resolve
+          items:
+            $ref: '#/components/schemas/EntityMention'
+        context:
+          type: string
+          description: Optional surrounding text context to improve resolution accuracy
+    EntityMention:
+      type: object
+      required:
+      - text
+      properties:
+        text:
+          type: string
+          description: Entity mention text or identifier
+          example: Apple Inc
+        identifierType:
+          type: string
+          description: Type of identifier provided
+          enum:
+          - name
+          - ticker
+          - cusip
+          - isin
+          - cik
+          - lei
+          example: name
+    CrossReferences:
+      type: object
+      description: Cross-references to identifiers in other systems
+      properties:
+        spglobalCompanyId:
+          type: string
+          description: S&P Global Company ID (Capital IQ)
+          example: 0078552
+        ticker:
+          type: string
+          description: Primary exchange ticker symbol
+          example: AAPL
+        cusip:
+          type: string
+          description: CUSIP identifier
+          example: 037833100
+        isin:
+          type: string
+          description: ISIN identifier
+          example: US0378331005
+        lei:
+          type: string
+          description: Legal Entity Identifier
+          example: HWUPKR0MPOU8FGXBT394
+    LinkResult:
+      type: object
+      properties:
+        mention:
+          $ref: '#/components/schemas/EntityMention'
+        candidates:
+          type: array
+          description: Ranked entity candidates sorted by confidence score
+          items:
+            $ref: '#/components/schemas/EntityCandidate'
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

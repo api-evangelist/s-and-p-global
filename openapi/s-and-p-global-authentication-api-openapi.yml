@@ -1,0 +1,76 @@
+openapi: 3.0.3
+info:
+  title: S&P Global Commodity Insights Authentication API
+  description: HTTP-based RESTful API providing access to energy and commodity market data through the S&P Global Commodity Insights (formerly Platts) platform. Covers market data, reference data, and historical prices for oil, gas, petrochemicals, power, shipping, metals, and agriculture. Supports JSON and XML response formats.
+  version: 1.0.0
+  contact:
+    name: S&P Global Developer Portal
+    url: https://developer.spglobal.com/
+  termsOfService: https://www.spglobal.com/en/terms-of-use
+servers:
+- url: https://api.platts.com
+  description: S&P Global Commodity Insights production API
+- url: https://developer.platts.com
+  description: S&P Global Commodity Insights developer portal API
+tags:
+- name: Authentication
+  description: Token-based authentication
+paths:
+  /auth/api:
+    post:
+      operationId: authenticate
+      summary: Authenticate and Get Access Token
+      description: Exchange API credentials for a Bearer access token. The token is valid for 3600 seconds (60 minutes). A refresh token valid for 7 days is also returned.
+      tags:
+      - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthRequest'
+      responses:
+        '200':
+          description: Authentication successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '401':
+          description: Invalid credentials
+components:
+  schemas:
+    AuthResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+          description: Bearer token for API authentication (valid 3600 seconds)
+        refresh_token:
+          type: string
+          description: Token for refreshing access (valid 7 days)
+        token_type:
+          type: string
+          example: Bearer
+        expires_in:
+          type: integer
+          description: Token expiry in seconds
+          example: 3600
+    AuthRequest:
+      type: object
+      required:
+      - username
+      - password
+      properties:
+        username:
+          type: string
+          description: S&P Global API username
+          example: api_user@example.com
+        password:
+          type: string
+          description: S&P Global API password
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
