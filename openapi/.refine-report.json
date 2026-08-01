@@ -1,0 +1,22 @@
+{
+  "provider": "s-and-p-global",
+  "sources": [
+    "s-and-p-global-authentication-api-openapi.yml",
+    "s-and-p-global-entity-resolution-api-openapi.yml",
+    "s-and-p-global-market-data-api-openapi.yml",
+    "s-and-p-global-reference-data-api-openapi.yml",
+    "s-and-p-global-search-api-openapi.yml"
+  ],
+  "outputs": [
+    "s-and-p-global-authentication-api-openapi.yml",
+    "s-and-p-global-entity-resolution-api-openapi.yml",
+    "s-and-p-global-market-data-api-openapi.yml",
+    "s-and-p-global-reference-data-api-openapi.yml",
+    "s-and-p-global-search-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
