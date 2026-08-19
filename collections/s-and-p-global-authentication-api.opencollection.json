@@ -1,0 +1,33 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "S&P Global Commodity Insights Authentication API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Authenticate and Get Access Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.platts.com/auth/api",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Exchange API credentials for a Bearer access token. The token is valid for 3600 seconds (60 minutes). A refresh token valid for 7 days is also returned."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

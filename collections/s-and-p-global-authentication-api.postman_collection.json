@@ -1,0 +1,163 @@
+{
+  "item": [
+    {
+      "id": "03d9ac8c-3d10-44f1-bf0a-1f8d101d86bb",
+      "name": "Authentication",
+      "description": {
+        "content": "Token-based authentication",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "154e811d-89dc-493a-8bbf-e7ef156f7836",
+          "name": "Authenticate and Get Access Token",
+          "request": {
+            "name": "Authenticate and Get Access Token",
+            "description": {
+              "content": "Exchange API credentials for a Bearer access token. The token is valid for 3600 seconds (60 minutes). A refresh token valid for 7 days is also returned.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "auth",
+                "api"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f4994765-666d-427a-85c4-82b979fdc73a",
+              "name": "Authentication successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "auth",
+                    "api"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"username\": \"api_user@example.com\",\n  \"password\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"access_token\": \"string\",\n  \"refresh_token\": \"string\",\n  \"token_type\": \"Bearer\",\n  \"expires_in\": 3600\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2465fa51-3fda-42e5-a503-ec6d66501bda",
+              "name": "Invalid credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "auth",
+                    "api"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"username\": \"api_user@example.com\",\n  \"password\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.platts.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "805c127b-651d-423d-ba73-0f6ba53ba0d0",
+    "name": "S&P Global Commodity Insights Authentication API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "HTTP-based RESTful API providing access to energy and commodity market data through the S&P Global Commodity Insights (formerly Platts) platform. Covers market data, reference data, and historical prices for oil, gas, petrochemicals, power, shipping, metals, and agriculture. Supports JSON and XML response formats.\n\nContact Support:\n Name: S&P Global Developer Portal",
+      "type": "text/plain"
+    }
+  }
+}

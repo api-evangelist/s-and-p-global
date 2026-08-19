@@ -1,0 +1,53 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "S&P Global Commodity Insights Authentication Search API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Search",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search Entities",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.platts.com/search",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Search query string (entity name, ticker, or other identifier)"
+              },
+              {
+                "name": "entityType",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by entity type"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Search for entities by name, ticker symbol, or other attributes. Returns a ranked list of matching entity candidates with confidence scores."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

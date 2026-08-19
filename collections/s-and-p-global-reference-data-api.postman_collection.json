@@ -1,0 +1,164 @@
+{
+  "item": [
+    {
+      "id": "c822e485-4f60-4d8e-96f1-464594b0c01c",
+      "name": "Reference Data",
+      "description": {
+        "content": "Symbol and contract reference data",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8af18394-e784-468b-b832-3c1e97d42b65",
+          "name": "List Market Data Symbols",
+          "request": {
+            "name": "List Market Data Symbols",
+            "description": {
+              "content": "Returns reference data for available commodity symbols, including descriptions, commodity types, and units of measure.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "market-data",
+                "v1",
+                "symbols"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "commodityName",
+                  "value": "<string>",
+                  "description": "Filter by commodity name (e.g., Crude Oil, Natural Gas)"
+                },
+                {
+                  "disabled": false,
+                  "key": "assessmentFrequency",
+                  "value": "<string>",
+                  "description": "Filter by assessment frequency"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "100",
+                  "description": "Number of records per page (max 1000)"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for pagination"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "cf3bd844-4e9e-40a3-b97b-c7c00d3137e6",
+              "name": "Symbol reference data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "market-data",
+                    "v1",
+                    "symbols"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "commodityName",
+                      "value": "Crude Oil"
+                    },
+                    {
+                      "key": "assessmentFrequency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "100"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"symbol\": \"PCAAS00\",\n      \"description\": \"Crude Oil Dated Brent Daily\",\n      \"commodityName\": \"Crude Oil\",\n      \"uom\": \"USD/BBL\",\n      \"currency\": \"USD\",\n      \"assessmentFrequency\": \"Daily\",\n      \"activeTo\": \"2017-09-24\"\n    },\n    {\n      \"symbol\": \"PCAAS00\",\n      \"description\": \"Crude Oil Dated Brent Daily\",\n      \"commodityName\": \"Crude Oil\",\n      \"uom\": \"USD/BBL\",\n      \"currency\": \"USD\",\n      \"assessmentFrequency\": \"Daily\",\n      \"activeTo\": \"2010-03-05\"\n    }\n  ],\n  \"metadata\": {\n    \"count\": 2691,\n    \"total\": 3931\n  },\n  \"pagination\": {\n    \"page\": 5572,\n    \"pageSize\": 6222,\n    \"totalPages\": 7120,\n    \"totalCount\": 9427\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.platts.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "18715506-b7e5-4b4c-9928-dd876fbc545c",
+    "name": "S&P Global Commodity Insights Authentication Reference Data API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "HTTP-based RESTful API providing access to energy and commodity market data through the S&P Global Commodity Insights (formerly Platts) platform. Covers market data, reference data, and historical prices for oil, gas, petrochemicals, power, shipping, metals, and agriculture. Supports JSON and XML response formats.\n\nContact Support:\n Name: S&P Global Developer Portal",
+      "type": "text/plain"
+    }
+  }
+}

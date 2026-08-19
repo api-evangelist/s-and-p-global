@@ -1,0 +1,202 @@
+{
+  "item": [
+    {
+      "id": "58f03c24-c9fd-458f-9b29-b73535a09038",
+      "name": "Search",
+      "description": {
+        "content": "Entity search and discovery",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c26b305d-1255-4fd1-a3e9-afa0580bb50b",
+          "name": "Search Entities",
+          "request": {
+            "name": "Search Entities",
+            "description": {
+              "content": "Search for entities by name, ticker symbol, or other attributes. Returns a ranked list of matching entity candidates with confidence scores.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "(Required) Search query string (entity name, ticker, or other identifier)"
+                },
+                {
+                  "disabled": false,
+                  "key": "entityType",
+                  "value": "<string>",
+                  "description": "Filter results by entity type"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Maximum number of results to return"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "fea2724f-3087-4e59-a722-b0cdc6950722",
+              "name": "Entity search results",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "Apple Inc"
+                    },
+                    {
+                      "key": "entityType",
+                      "value": "company"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"keid\": \"keid_abc12345\",\n      \"name\": \"Apple Inc.\",\n      \"entityType\": \"company\",\n      \"confidence\": 0.98,\n      \"crossReferences\": {\n        \"spglobalCompanyId\": \"string\",\n        \"ticker\": \"AAPL\",\n        \"cusip\": \"string\",\n        \"isin\": \"US0378331005\",\n        \"lei\": \"HWUPKR0MPOU8FGXBT394\"\n      }\n    },\n    {\n      \"keid\": \"keid_abc12345\",\n      \"name\": \"Apple Inc.\",\n      \"entityType\": \"company\",\n      \"confidence\": 0.98,\n      \"crossReferences\": {\n        \"spglobalCompanyId\": \"string\",\n        \"ticker\": \"AAPL\",\n        \"cusip\": \"string\",\n        \"isin\": \"US0378331005\",\n        \"lei\": \"HWUPKR0MPOU8FGXBT394\"\n      }\n    }\n  ],\n  \"total\": 8006\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0e86a791-af4c-4a80-9221-6ca49c074d96",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "Apple Inc"
+                    },
+                    {
+                      "key": "entityType",
+                      "value": "company"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.platts.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "657f36d4-a7cc-4fbd-85ba-e73cc9c49f95",
+    "name": "S&P Global Commodity Insights Authentication Search API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "HTTP-based RESTful API providing access to energy and commodity market data through the S&P Global Commodity Insights (formerly Platts) platform. Covers market data, reference data, and historical prices for oil, gas, petrochemicals, power, shipping, metals, and agriculture. Supports JSON and XML response formats.\n\nContact Support:\n Name: S&P Global Developer Portal",
+      "type": "text/plain"
+    }
+  }
+}

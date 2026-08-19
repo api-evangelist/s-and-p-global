@@ -1,0 +1,453 @@
+{
+  "item": [
+    {
+      "id": "56a64270-4d08-45d8-a674-802645ba3106",
+      "name": "Market Data",
+      "description": {
+        "content": "Real-time and historical commodity market prices",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "093634f1-82ff-46a5-9e2e-b708d0e6ac89",
+          "name": "Get Current Market Data",
+          "request": {
+            "name": "Get Current Market Data",
+            "description": {
+              "content": "Returns the most recent assessment values for specified commodity symbols.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "market-data",
+                "v1",
+                "value",
+                "current"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "symbol",
+                  "value": "<string>",
+                  "description": "(Required) Comma-separated list of commodity symbol codes (e.g., PCAAS00, AAPTA00)"
+                },
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json",
+                  "description": "Response format"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "5dcc2613-b6f5-4b07-8143-e13eba1bfd87",
+              "name": "Current market data values",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "market-data",
+                    "v1",
+                    "value",
+                    "current"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "symbol",
+                      "value": "PCAAS00,AAPTA00"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"symbol\": \"PCAAS00\",\n      \"assessDate\": \"2024-12-01\",\n      \"value\": 72.45,\n      \"uom\": \"USD/BBL\",\n      \"currency\": \"USD\",\n      \"bate\": \"C\"\n    },\n    {\n      \"symbol\": \"PCAAS00\",\n      \"assessDate\": \"2024-12-01\",\n      \"value\": 72.45,\n      \"uom\": \"USD/BBL\",\n      \"currency\": \"USD\",\n      \"bate\": \"C\"\n    }\n  ],\n  \"metadata\": {\n    \"count\": 803,\n    \"total\": 7309\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5de64a28-7ec2-43d4-9340-a4729ad91feb",
+              "name": "Unauthorized - invalid or expired token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "market-data",
+                    "v1",
+                    "value",
+                    "current"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "symbol",
+                      "value": "PCAAS00,AAPTA00"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a0e749d7-67c1-4487-94c9-98dfeeb5a6e7",
+          "name": "Get Historical Market Data",
+          "request": {
+            "name": "Get Historical Market Data",
+            "description": {
+              "content": "Returns historical assessment values for specified commodity symbols over a date range.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "market-data",
+                "v1",
+                "value",
+                "history"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "symbol",
+                  "value": "<string>",
+                  "description": "(Required) Comma-separated commodity symbol codes"
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<date>",
+                  "description": "(Required) Start date in YYYY-MM-DD format"
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<date>",
+                  "description": "(Required) End date in YYYY-MM-DD format"
+                },
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json",
+                  "description": "Response format"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "100",
+                  "description": "Number of records per page (max 1000)"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for pagination"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f201104b-ff99-4a1c-9662-64a11281f7c3",
+              "name": "Historical market data values",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "market-data",
+                    "v1",
+                    "value",
+                    "history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "symbol",
+                      "value": "PCAAS00"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2024-01-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2024-12-31"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "100"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"symbol\": \"PCAAS00\",\n      \"assessDate\": \"2024-12-01\",\n      \"value\": 72.45,\n      \"uom\": \"USD/BBL\",\n      \"currency\": \"USD\",\n      \"bate\": \"C\"\n    },\n    {\n      \"symbol\": \"PCAAS00\",\n      \"assessDate\": \"2024-12-01\",\n      \"value\": 72.45,\n      \"uom\": \"USD/BBL\",\n      \"currency\": \"USD\",\n      \"bate\": \"C\"\n    }\n  ],\n  \"metadata\": {\n    \"count\": 3092,\n    \"total\": 3013\n  },\n  \"pagination\": {\n    \"page\": 2115,\n    \"pageSize\": 3010,\n    \"totalPages\": 9520,\n    \"totalCount\": 3138\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "abe87b85-1681-4a48-8dca-dc56f9daafbf",
+          "name": "Get Modified Symbols Since Date",
+          "request": {
+            "name": "Get Modified Symbols Since Date",
+            "description": {
+              "content": "Returns symbols whose values have been modified since a specified date. Useful for incremental data pulls.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "market-data",
+                "v1",
+                "modified-date"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "modifiedDate",
+                  "value": "<date>",
+                  "description": "(Required) Return symbols modified after this date (YYYY-MM-DD)"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "34bc83eb-2f62-4468-9722-964dc7270904",
+              "name": "List of modified symbols",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "market-data",
+                    "v1",
+                    "modified-date"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "modifiedDate",
+                      "value": "2024-06-01"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    \"string\",\n    \"string\"\n  ],\n  \"count\": 7050\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.platts.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "3a236c88-440e-47a0-bffe-c631e7a49823",
+    "name": "S&P Global Commodity Insights Authentication Market Data API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "HTTP-based RESTful API providing access to energy and commodity market data through the S&P Global Commodity Insights (formerly Platts) platform. Covers market data, reference data, and historical prices for oil, gas, petrochemicals, power, shipping, metals, and agriculture. Supports JSON and XML response formats.\n\nContact Support:\n Name: S&P Global Developer Portal",
+      "type": "text/plain"
+    }
+  }
+}

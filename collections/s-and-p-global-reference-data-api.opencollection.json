@@ -1,0 +1,59 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "S&P Global Commodity Insights Authentication Reference Data API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Reference Data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Market Data Symbols",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.platts.com/market-data/v1/symbols",
+            "params": [
+              {
+                "name": "commodityName",
+                "value": "",
+                "type": "query",
+                "description": "Filter by commodity name (e.g., Crude Oil, Natural Gas)"
+              },
+              {
+                "name": "assessmentFrequency",
+                "value": "",
+                "type": "query",
+                "description": "Filter by assessment frequency"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of records per page (max 1000)"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns reference data for available commodity symbols, including descriptions, commodity types, and units of measure."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

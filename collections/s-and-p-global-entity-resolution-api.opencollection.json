@@ -1,0 +1,60 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "S&P Global Commodity Insights Authentication Entity Resolution API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Entity Resolution",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Link Entity to Canonical Identifier",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.platts.com/link",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Resolves one or more entity mentions to their canonical Kensho Entity Identifier (KEID). Accepts entity names, aliases, ticker symbols, CUSIP, ISIN, or other identifiers and returns the canonical entity record."
+        },
+        {
+          "info": {
+            "name": "Get Entity by KEID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.platts.com/entity/:keid",
+            "params": [
+              {
+                "name": "keid",
+                "value": "",
+                "type": "path",
+                "description": "Kensho Entity Identifier (KEID) for the entity"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the full canonical entity record for a given Kensho Entity Identifier (KEID), including names, aliases, entity type, and cross-references to other S&P Global identifiers."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
