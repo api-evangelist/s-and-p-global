@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: S&P Global Commodity Insights Authentication Market Data API
+  title: S&P Global Commodity Insights Market Data API
   description: HTTP-based RESTful API providing access to energy and commodity market data through the S&P Global Commodity Insights (formerly Platts) platform. Covers market data, reference data, and historical prices for oil, gas, petrochemicals, power, shipping, metals, and agriculture. Supports JSON and XML response formats.
   version: 1.0.0
   contact:
@@ -144,26 +144,17 @@ paths:
                 $ref: '#/components/schemas/ModifiedSymbolsResponse'
 components:
   schemas:
-    HistoricalDataResponse:
+    ModifiedSymbolsResponse:
       type: object
       properties:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/MarketDataPoint'
-        metadata:
-          $ref: '#/components/schemas/ResponseMetadata'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-    MarketDataResponse:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/MarketDataPoint'
-        metadata:
-          $ref: '#/components/schemas/ResponseMetadata'
+            type: string
+            description: Modified symbol code
+        count:
+          type: integer
+          description: Total number of modified symbols
     MarketDataPoint:
       type: object
       properties:
@@ -193,17 +184,6 @@ components:
           type: string
           description: Buy/Ask/Trade/End-of-day indicator
           example: C
-    ModifiedSymbolsResponse:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            type: string
-            description: Modified symbol code
-        count:
-          type: integer
-          description: Total number of modified symbols
     ResponseMetadata:
       type: object
       properties:
@@ -228,6 +208,26 @@ components:
         totalCount:
           type: integer
           description: Total record count
+    MarketDataResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/MarketDataPoint'
+        metadata:
+          $ref: '#/components/schemas/ResponseMetadata'
+    HistoricalDataResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/MarketDataPoint'
+        metadata:
+          $ref: '#/components/schemas/ResponseMetadata'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
   securitySchemes:
     BearerAuth:
       type: http

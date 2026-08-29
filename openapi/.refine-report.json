@@ -1,22 +1,29 @@
 {
   "provider": "s-and-p-global",
   "sources": [
-    "s-and-p-global-authentication-api-openapi.yml",
-    "s-and-p-global-entity-resolution-api-openapi.yml",
-    "s-and-p-global-market-data-api-openapi.yml",
-    "s-and-p-global-reference-data-api-openapi.yml",
-    "s-and-p-global-search-api-openapi.yml"
+    "_original/s-and-p-global-commodity-insights-openapi.yml",
+    "_original/s-and-p-global-kensho-link-openapi.yml"
   ],
   "outputs": [
     "s-and-p-global-authentication-api-openapi.yml",
-    "s-and-p-global-entity-resolution-api-openapi.yml",
     "s-and-p-global-market-data-api-openapi.yml",
     "s-and-p-global-reference-data-api-openapi.yml",
+    "s-and-p-global-entity-resolution-api-openapi.yml",
     "s-and-p-global-search-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "s-and-p-global-commodity-insights-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "s-and-p-global-kensho-link-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0"
+  ],
+  "skipped": [
+    "s-and-p-global-authentication-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "s-and-p-global-entity-resolution-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "s-and-p-global-market-data-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "s-and-p-global-reference-data-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "s-and-p-global-search-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

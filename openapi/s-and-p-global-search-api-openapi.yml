@@ -1,17 +1,15 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: S&P Global Commodity Insights Authentication Search API
-  description: HTTP-based RESTful API providing access to energy and commodity market data through the S&P Global Commodity Insights (formerly Platts) platform. Covers market data, reference data, and historical prices for oil, gas, petrochemicals, power, shipping, metals, and agriculture. Supports JSON and XML response formats.
+  title: Kensho Link Search API
+  description: S&P Global Kensho Link REST API for entity resolution and linking across financial instruments, companies, people, and other entities. Provides a canonical entity identifier (KEID) layer that links entities across S&P Global data assets including Capital IQ, Market Intelligence, and Platts. Used for data integration and entity disambiguation in financial analytics.
   version: 1.0.0
   contact:
-    name: S&P Global Developer Portal
-    url: https://developer.spglobal.com/
+    name: Kensho Technologies
+    url: https://api.link.kensho.com/docs/guides/rest-api/
   termsOfService: https://www.spglobal.com/en/terms-of-use
 servers:
-- url: https://api.platts.com
-  description: S&P Global Commodity Insights production API
-- url: https://developer.platts.com
-  description: S&P Global Commodity Insights developer portal API
+- url: https://api.link.kensho.com
+  description: Kensho Link production API
 tags:
 - name: Search
   description: Entity search and discovery
@@ -66,40 +64,6 @@ paths:
           description: Unauthorized
 components:
   schemas:
-    SearchResponse:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/EntityCandidate'
-        total:
-          type: integer
-          description: Total number of matching results
-    EntityCandidate:
-      type: object
-      properties:
-        keid:
-          type: string
-          description: Kensho Entity Identifier
-          example: keid_abc12345
-        name:
-          type: string
-          description: Canonical entity name
-          example: Apple Inc.
-        entityType:
-          type: string
-          description: Entity type classification
-          example: company
-        confidence:
-          type: number
-          format: double
-          description: Confidence score for this candidate (0.0 to 1.0)
-          minimum: 0
-          maximum: 1
-          example: 0.98
-        crossReferences:
-          $ref: '#/components/schemas/CrossReferences'
     CrossReferences:
       type: object
       description: Cross-references to identifiers in other systems
@@ -124,6 +88,40 @@ components:
           type: string
           description: Legal Entity Identifier
           example: HWUPKR0MPOU8FGXBT394
+    EntityCandidate:
+      type: object
+      properties:
+        keid:
+          type: string
+          description: Kensho Entity Identifier
+          example: keid_abc12345
+        name:
+          type: string
+          description: Canonical entity name
+          example: Apple Inc.
+        entityType:
+          type: string
+          description: Entity type classification
+          example: company
+        confidence:
+          type: number
+          format: double
+          description: Confidence score for this candidate (0.0 to 1.0)
+          minimum: 0
+          maximum: 1
+          example: 0.98
+        crossReferences:
+          $ref: '#/components/schemas/CrossReferences'
+    SearchResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityCandidate'
+        total:
+          type: integer
+          description: Total number of matching results
   securitySchemes:
     BearerAuth:
       type: http
