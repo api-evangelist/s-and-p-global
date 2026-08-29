@@ -172,6 +172,9 @@ apis:
   - type: Documentation
     url: https://api.link.kensho.com/docs/guides/rest-api/
 common:
+  - type: CapabilityMap
+    url: capabilities/s-and-p-global-capability-edges.yml
+    name: S&P Global Business Capability Map
   - type: AgenticAccess
     url: agentic-access/s-and-p-global-agentic-access.yml
   - type: DomainSecurity
